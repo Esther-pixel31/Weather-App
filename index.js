@@ -1,8 +1,17 @@
-function search(event) {
+function display(response) {
+    let cityElement = document.querySelector("#current-city");
+    cityElement.innerHTML = response.data.city;
+    let tempElement = document.querySelector(".current-temperature-value");
+    tempElement.innerHTML = Math.round(response.data.temperature.current);
+  }
+  
+  function search(event) {
     event.preventDefault();
     let searchInputElement = document.querySelector("#search-input");
-    let cityElement = document.querySelector("#current-city");
-    cityElement.innerHTML = searchInputElement.value;
+    let city = searchInputElement.value;
+    let apiKey = "8d35b60a4af3ao266f083t4e99acb1e4";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(display);
   }
   
   function formatDate(date) {
@@ -25,7 +34,7 @@ function search(event) {
       "Wednesday",
       "Thursday",
       "Friday",
-      "Saturday"
+      "Saturday",
     ];
   
     let formattedDay = days[day];
